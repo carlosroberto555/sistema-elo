@@ -9,7 +9,7 @@ import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
 } from "reactstrap";
 import { Container, Photo, NomeUser, Matricula, RouterLink } from "./style";
 import { auth } from "firebase/app";
@@ -27,24 +27,12 @@ export default function ActionBarPadrao() {
     <Container>
       <Row>
         <Col sm="6">
-          <h3>Resolve Direito</h3>
+          <h3>Clinica ELO</h3>
         </Col>
         <Col sm="6">
           <Row>
             <Col md="4"></Col>
-            <Col sm="2">
-              <Dropdown isOpen={notify} toggle={() => setNotify(!notify)}>
-                <DropdownToggle
-                  style={{ backgroundColor: "#ffffff", border: "none" }}
-                >
-                  <NotificationsActiveIcon style={{ color: "#4a4a4a" }} />
-                </DropdownToggle>
-                <DropdownMenu>
-                  <DropdownItem>Notificação 1</DropdownItem>
-                  <DropdownItem>Notificação 2</DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-            </Col>
+            <Col sm="2"></Col>
             <Col md="6">
               <RouterLink to="/perfil">
                 <Row>
