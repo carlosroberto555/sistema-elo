@@ -8,4 +8,10 @@ export const Containermenu = styled.div`
 `;
 export const Logoimg = styled.img`
   width: 100%;
+  max-width: 60px;
+`;
+export const Title = styled.span`
+  font-size: 25px;
+  color: #ffffff;
+  margin-left: 15px;
 `;

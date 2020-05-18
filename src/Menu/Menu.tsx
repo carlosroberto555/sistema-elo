@@ -3,13 +3,14 @@ import { Nav, NavItem, NavLink } from "reactstrap";
 import { Link } from "react-router-dom";
 import { auth } from "firebase/app";
 
-import Logo from "../assets/logo/logo_completa.png";
-import { Containermenu, Logoimg } from "./style";
+import Logo from "../assets/logo/logo.svg";
+import { Containermenu, Logoimg, Title } from "./style";
 
 const Menu = () => {
   return (
     <Containermenu className="sidebar-sticky">
       <Logoimg src={Logo} />
+      <Title>Clinica Elo</Title>
       <Nav vertical>
         <NavItem>
           <NavLink style={{ color: "#fff" }} to="/inicio" tag={Link}>
