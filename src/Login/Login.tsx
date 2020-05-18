@@ -13,7 +13,7 @@ export default function Login(props: RouteChildrenProps<any>) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
-  const { from } = isAuthenticated
+  const from = isAuthenticated
     ? location.state || {
         from: { pathname: "/" },
       }
