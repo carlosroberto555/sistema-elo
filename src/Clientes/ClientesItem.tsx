@@ -12,7 +12,7 @@ type Props = {
 
 export default function Clientes({ filter }: Props) {
   const [clientes] = useFirestore<Clientes>("clientes");
-
+  console.log(clientes);
   function filtro(caso: Caso) {
     if (filter === 0 || caso.status === filter) {
       return true;
@@ -32,12 +32,12 @@ export default function Clientes({ filter }: Props) {
         </thead>
         <tbody>
           {clientes.map((cliente) => (
-            <tr key={cliente.uid}>
+            <tr key={cliente.key}>
               <th>{cliente.nome}</th>
               <th>{cliente.email}</th>
-              <th>{cliente.numero}</th>
+              <th>{cliente.telefone}</th>
               <th className="text-right">
-                <Link to={`/clientes/${cliente.uid}`}>
+                <Link to={`/clientes/${cliente.key}`}>
                   <Button color="info">Detalhes</Button>
                 </Link>
               </th>
