@@ -10,6 +10,7 @@ import {
   TabPane,
 } from "reactstrap";
 
+import TabDados from "./TabDados/TabDados";
 import Actionbar from "./Actionbar/Actionbar";
 import Infouser from "./Infouser/Infouser";
 import Historia from "./Historia/Historia";
@@ -31,6 +32,7 @@ export default function CasoDetalhes(props: RouteComponentProps<Params>) {
   const userResp = caso?.resp || "";
   const [user] = useFirestoreDoc<Usuarios>("usuarios", userResp);
   const [activeTab, setActiveTab] = useState("1");
+  const { history } = props;
 
   const toggleTab = (tab: string) => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -89,7 +91,9 @@ export default function CasoDetalhes(props: RouteComponentProps<Params>) {
           <TabPane tabId="1">
             <Interacao id={params.id} />
           </TabPane>
-          <TabPane tabId="2"></TabPane>
+          <TabPane tabId="2">
+            <TabDados id={params.id} onGoBack={() => history.goBack()} />
+          </TabPane>
         </TabContent>
       </Col>
     </Row>
