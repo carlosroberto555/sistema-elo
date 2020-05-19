@@ -10,7 +10,7 @@ import Chat from "../Chat";
 import Page404 from "../Page404";
 import Usuarios from "../Usuarios";
 import UsersDetalhes from "../UsersDetalhes";
-import ClienteDetalhes from "../ClienteDetalhes";
+import ClienteDetalhes2 from "../ClienteDetalhes2";
 
 export default () => (
   <Switch>
@@ -19,7 +19,7 @@ export default () => (
     <Route exact path="/clientes" component={Clientes} />
     <Route path="/clientes/:id" component={CasoDetalhes} />
     <Route path="/perfil" component={Perfil} />
-    <Route path="/clientes2/:id" component={ClienteDetalhes} />
+    <Route path="/clientes2/:id" component={ClienteDetalhes2} />
     <Route path="/clientes2" component={Clientes2} />
     <Route path="/usuarios/:id" component={UsersDetalhes} />
     <Route path="/usuarios" component={Usuarios} />

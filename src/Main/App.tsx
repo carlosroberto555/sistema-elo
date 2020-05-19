@@ -5,7 +5,7 @@ import {
   Switch,
   Route,
   Redirect,
-  RouteProps
+  RouteProps,
 } from "react-router-dom";
 import ActionBarPadrao from "../ActionBarPadrao/ActionBarPadrao";
 import "react-circular-progressbar/dist/styles.css";
@@ -22,7 +22,7 @@ export default function App() {
   const [isAuthenticated, setAuthenticated] = useState(true);
 
   useEffect(() => {
-    return auth.onAuthStateChanged(user => {
+    return auth.onAuthStateChanged((user) => {
       setUser(user);
       setLoading(false);
       setAuthenticated(user !== null);
@@ -47,7 +47,7 @@ export default function App() {
             <Redirect
               to={{
                 pathname: "/login",
-                state: { from: location }
+                state: { from: location },
               }}
             />
           )

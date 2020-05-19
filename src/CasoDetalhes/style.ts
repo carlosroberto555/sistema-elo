@@ -34,8 +34,8 @@ export const FotoPerfil = styled.img`
 `;
 export const NomeUser = styled.div`
   color: #000000;
-  margin-left: 15px;
-  font-size: 20px;
+  margin-top: 15px;
+  font-size: 25px;
 `;
 export const Idade = styled.p`
   font-size: 14px;
