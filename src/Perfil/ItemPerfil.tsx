@@ -3,7 +3,13 @@ import { Row, Col, Input, Label, FormGroup, Button } from "reactstrap";
 import Foto from "../../src/assets/profile-user.png";
 import { useFirestoreDoc } from "../utils";
 import { Form, Field, FieldRenderProps } from "react-final-form";
-import { Container, Containerperfil, FotoPerfil, Center } from "./style";
+import {
+  Container,
+  Containerperfil,
+  FotoPerfil,
+  Center,
+  AddImg,
+} from "./style";
 import { InputType } from "reactstrap/lib/Input";
 import { firestore, auth } from "firebase/app";
 
@@ -35,9 +41,18 @@ export default function ItemPerfil({ id, onGoBack }: Props) {
     "usuarios",
     currentUser ? currentUser.uid : ""
   );
+  const [imgPreview, setImgPreview] = useState();
 
-  const avatar = (user && user.avatar) || Foto;
+  const avatar = imgPreview
+    ? URL.createObjectURL(imgPreview)
+    : (user && user.avatar) || Foto;
 
+  function onChangeImage(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.files) {
+      //@ts-ignore
+      setImgPreview(e.target.files[0]);
+    }
+  }
   return (
     <Form
       onSubmit={async (values) => {
@@ -59,7 +74,14 @@ export default function ItemPerfil({ id, onGoBack }: Props) {
             <Center>
               <Row from>
                 <Col>
-                  <FotoPerfil src={avatar} />
+                  <Label for="input-file">
+                    <FotoPerfil src={avatar} />
+                  </Label>
+                  <AddImg
+                    id="input-file"
+                    type="file"
+                    onChange={onChangeImage}
+                  />
                 </Col>
                 <Col>
                   <Field

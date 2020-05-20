@@ -44,3 +44,6 @@ export const SubTitle = styled.p`
   color: #a1a1a1;
   margin: 0;
 `;
+export const AddImg = styled.input`
+  display: none;
+`;
