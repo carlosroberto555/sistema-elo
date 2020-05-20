@@ -16,11 +16,8 @@ import { auth } from "firebase/app";
 
 export default function ActionBarPadrao() {
   const [notify, setNotify] = useState(false);
-  const currentUser = auth().currentUser;
-  const [user] = useFirestoreDoc<Usuarios>(
-    "usuarios",
-    currentUser ? currentUser.uid : ""
-  );
+  const uid = auth().currentUser?.uid;
+  const [user] = useFirestoreDoc<Usuarios>("usuarios", uid as string);
   const avatar = (user && user.avatar) || Foto;
 
   return (
@@ -39,7 +36,7 @@ export default function ActionBarPadrao() {
                   <Photo src={avatar} />
                   <NomeUser>
                     {user && user.nome} <br />
-                    <Matricula>#IPN05</Matricula>
+                    <Matricula> {user && user.email} </Matricula>
                   </NomeUser>
                 </Row>
               </RouterLink>
