@@ -21,6 +21,7 @@ function FieldInput({ label, input, meta, ...rest }: FieldProps) {
     </FormGroup>
   );
 }
+const required = (value?: string) => (value ? undefined : "Campo obrigatório");
 
 interface Props {
   id: string;
@@ -39,14 +40,14 @@ export default function ItemPerfil({ id, onGoBack }: Props) {
 
   return (
     <Form
-      onSubmit={async values => {
+      onSubmit={async (values) => {
         await firestore()
           .collection("usuarios")
           .doc(currentUser ? currentUser.uid : "")
           .update(values);
         if (currentUser) {
           currentUser.updateProfile({
-            displayName: values.nome
+            displayName: values.nome,
           });
         }
         setEditar(false);
@@ -83,10 +84,7 @@ export default function ItemPerfil({ id, onGoBack }: Props) {
             </Center>
             <hr />
             <Row>
-              <Col
-                md={6}
-                style={{ borderRight: "1px solid rgba(0, 0, 0, .1)" }}
-              >
+              <Col md={12}>
                 <Row form>
                   <Col md={6}>
                     <Field
@@ -94,9 +92,19 @@ export default function ItemPerfil({ id, onGoBack }: Props) {
                       name="nome"
                       label="Nome"
                       component={FieldInput}
+                      validate={required}
                     />
                   </Col>
                   <Col md={6}>
+                    <Field
+                      disabled={!editar}
+                      name="telefone"
+                      label="Telefone"
+                      component={FieldInput}
+                      validate={required}
+                    />
+                  </Col>
+                  <Col md={8}>
                     <Field
                       disabled={!editar}
                       name="email"
@@ -104,159 +112,56 @@ export default function ItemPerfil({ id, onGoBack }: Props) {
                       component={FieldInput}
                     />
                   </Col>
-                </Row>
-                <Row form>
-                  <Col md={6}>
+                  <Col md={4}>
                     <Field
                       disabled={!editar}
-                      name="telefone"
-                      label="Telefone"
+                      type="select"
+                      name="status"
+                      label="Status"
                       component={FieldInput}
-                    />
+                    >
+                      <option>Ativo</option>
+                      <option>Bloqueado</option>
+                    </Field>
                   </Col>
-                  <Col md={6}>
-                    <Field
-                      type="date"
-                      disabled={!editar}
-                      name="nascimento"
-                      label="Data de Nascimento"
-                      component={FieldInput}
-                    />
-                  </Col>
-                </Row>
-                <Row form>
-                  <Col md="10">
+                  <Col md={8}>
                     <Field
                       disabled={!editar}
-                      name="endereco"
-                      label="Endereco"
-                      component={FieldInput}
-                    />
-                  </Col>
-                  <Col md="2">
-                    <Field
-                      disabled={!editar}
-                      name="numero"
-                      label="Numero"
-                      component={FieldInput}
-                    />
-                  </Col>
-                </Row>
-                <Row form>
-                  <Col md={3}>
-                    <Field
-                      disabled={!editar}
-                      name="bairro"
-                      label="Bairro"
+                      name="cpf"
+                      label="CPF"
                       component={FieldInput}
                     />
                   </Col>
                   <Col md={4}>
                     <Field
                       disabled={!editar}
-                      name="cidade"
-                      label="Cidade"
-                      component={FieldInput}
-                    />
-                  </Col>
-                  <Col md={2}>
-                    <Field
-                      disabled={!editar}
-                      name="estado"
-                      label="Estado"
-                      component={FieldInput}
-                    />
-                  </Col>
-                  <Col md={3}>
-                    <Field
-                      disabled={!editar}
-                      name="cep"
-                      label="CEP"
-                      component={FieldInput}
-                    />
-                  </Col>
-                </Row>
-              </Col>
-              <Col md={6}>
-                <Row form>
-                  <Col md={6}>
-                    <Field
-                      disabled={!editar}
-                      name="matricula"
-                      label="Matricula"
-                      component={FieldInput}
-                    />
-                  </Col>
-                  <Col md={6}>
-                    <Field
                       type="select"
-                      disabled={!editar}
-                      name="contrato"
-                      label="Contrato"
-                      component={FieldInput}
-                    >
-                      <option>Atual: {user && user.contrato}</option>
-                      <hr />
-                      <option>Efetivo</option>
-                      <option>Temporário</option>
-                    </Field>
-                  </Col>
-                  <Col md={6}>
-                    <Field
-                      disabled={!editar}
-                      name="funcao"
-                      label="Funcao"
-                      component={FieldInput}
-                    />
-                  </Col>
-                  <Col md={6}>
-                    <Field
-                      type="select"
-                      disabled={!editar}
-                      name="localqg"
-                      label="Local/QG"
-                      component={FieldInput}
-                    >
-                      <option>Atual: {user && user.localqg}</option>
-                      <hr />
-                      <option>Ipatinga - Bom Retiro</option>
-                      <option>Belo Horizonte</option>
-                    </Field>
-                  </Col>
-                </Row>
-                <Row form>
-                  <Col md="8">
-                    <Field
-                      disabled={!editar}
-                      name="emailpro"
-                      label="email @resovedireito"
-                      component={FieldInput}
-                    />
-                  </Col>
-                  <Col md="4">
-                    <Field
-                      type="select"
-                      disabled={!editar}
                       name="acesso"
-                      label="Nivel de Acesso"
+                      label="Tipo de Acesso"
                       component={FieldInput}
                     >
-                      <option>Atual: {user && user.acesso}</option>
-                      <hr />
-                      <option>Analista</option>
-                      <option>Financeiro</option>
                       <option>Master</option>
-                      <option>Sem Acesso</option>
+                      <option>Atendimento</option>
+                      <option>Médico</option>
                     </Field>
                   </Col>
+                  <Col md={6}>
+                    <Field
+                      disabled={!editar}
+                      name="crm"
+                      label="CRM"
+                      component={FieldInput}
+                    />
+                  </Col>
+                  <Col md={6}>
+                    <Field
+                      disabled={!editar}
+                      name="especialidade"
+                      label="Especialidade"
+                      component={FieldInput}
+                    />
+                  </Col>
                 </Row>
-                <Field
-                  type="textarea"
-                  disabled={!editar}
-                  name="infoextra"
-                  label="Informações Extra"
-                  component={FieldInput}
-                />
               </Col>
             </Row>
             <hr />

@@ -11,7 +11,7 @@ import {
   Label,
   Input,
   Row,
-  Col
+  Col,
 } from "reactstrap";
 import { Form, Field, FieldRenderProps } from "react-final-form";
 import { firestore } from "firebase/app";
@@ -53,6 +53,7 @@ export default function Usuarios() {
 
   function onChangeImage(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files) {
+      //@ts-ignore
       setImgPreview(e.target.files[0]);
     }
   }
@@ -119,7 +120,7 @@ export default function Usuarios() {
             <AddIcon /> Novo usuário
           </Button>
           <Modal style={{ minWidth: "80%" }} isOpen={modal} toggle={toggle}>
-            <ModalHeader toggle={toggle}>Adicionar novo usuário</ModalHeader>
+            <ModalHeader toggle={toggle}>Adicionar novo Usuário</ModalHeader>
             <ModalBody>
               <Center>
                 <Row from>
@@ -162,184 +163,68 @@ export default function Usuarios() {
               <hr />
 
               <Row>
-                <Col
-                  md={6}
-                  style={{ borderRight: "1px solid rgba(0, 0, 0, .1)" }}
-                >
+                <Col md={12}>
                   <Row form>
                     <Col md={6}>
                       <Field
                         name="nome"
                         label="Nome"
-                        placeholder="Nome"
                         component={FieldInput}
                         validate={required}
                       />
                     </Col>
-                    <Col md={6}>
-                      <Field
-                        name="email"
-                        label="Email"
-                        placeholder="Email"
-                        component={FieldInput}
-                      />
-                    </Col>
-                  </Row>
-                  <Row form>
                     <Col md={6}>
                       <Field
                         name="telefone"
                         label="Telefone"
-                        placeholder="Telefone"
                         component={FieldInput}
                         validate={required}
                       />
                     </Col>
-                    <Col md={6}>
+                    <Col md={8}>
                       <Field
-                        type="date"
-                        name="nascimento"
-                        label="Data de Nascimento"
-                        component={FieldInput}
-                      />
-                    </Col>
-                  </Row>
-                  <Row form>
-                    <Col md={10}>
-                      <Field
-                        name="endereco"
-                        label="Endereço"
-                        placeholder="Endereço/Rua"
-                        component={FieldInput}
-                      />
-                    </Col>
-                    <Col md={2}>
-                      <Field
-                        name="numero"
-                        label="Numero"
-                        placeholder="Nº"
-                        component={FieldInput}
-                      />
-                    </Col>
-                  </Row>
-                  <Row form>
-                    <Col md={3}>
-                      <Field
-                        name="bairro"
-                        label="Bairro"
-                        placeholder="Bairro"
+                        name="email"
+                        label="Email"
                         component={FieldInput}
                       />
                     </Col>
                     <Col md={4}>
                       <Field
-                        name="cidade"
-                        label="Cidade"
-                        placeholder="Cidade"
-                        component={FieldInput}
-                      />
-                    </Col>
-                    <Col md={2}>
-                      <Field
-                        name="estado"
-                        label="Estado"
-                        placeholder="Estado"
-                        component={FieldInput}
-                      />
-                    </Col>
-                    <Col md={3}>
-                      <Field
-                        name="cep"
-                        label="CEP"
-                        placeholder="CEP"
-                        component={FieldInput}
-                      />
-                    </Col>
-                  </Row>
-                </Col>
-                <Col md={6}>
-                  <Row form>
-                    <Col md={6}>
-                      <Field
-                        name="matricula"
-                        label="Matricula"
-                        placeholder="Matricula"
-                        component={FieldInput}
-                        validate={required}
-                      />
-                    </Col>
-                    <Col md={6}>
-                      <Field
                         type="select"
-                        name="contrato"
-                        label="Contrato"
-                        placeholder="Contrato"
+                        name="status"
+                        label="Status"
                         component={FieldInput}
-                        validate={required}
                       >
-                        <option>Contrato</option>
-                        <option value="efetivo">Efetivo</option>
-                        <option value="temporario">Temporário</option>
+                        <option>Ativo</option>
+                        <option>Bloqueado</option>
                       </Field>
                     </Col>
-                    <Col md={6}>
-                      <Field
-                        name="funcao"
-                        label="Função"
-                        placeholder="Função"
-                        component={FieldInput}
-                      />
+                    <Col md={8}>
+                      <Field name="cpf" label="CPF" component={FieldInput} />
                     </Col>
-                    <Col md={6}>
-                      <Field
-                        type="select"
-                        name="localqg"
-                        label="Local/QG"
-                        placeholder="Local/QG"
-                        component={FieldInput}
-                        validate={required}
-                      >
-                        <option>Local / QG</option>
-                        <option value="qg-ipatinga">
-                          Ipatinga - Bom Retiro
-                        </option>
-                        <option value="qh-bh">Belo Horizonte</option>
-                      </Field>
-                    </Col>
-                  </Row>
-                  <Row form>
-                    <Col md="8">
-                      <Field
-                        name="emailpro"
-                        label="Email @resolvedireito"
-                        placeholder="Email @resolvedireito"
-                        component={FieldInput}
-                      />
-                    </Col>
-                    <Col md="4">
+                    <Col md={4}>
                       <Field
                         type="select"
                         name="acesso"
-                        label="Nivel de Acesso"
-                        placeholder="Acesso"
+                        label="Tipo de Acesso"
                         component={FieldInput}
-                        validate={required}
                       >
-                        <option>Acesso</option>
-                        <option value="analista">Analista</option>
-                        <option value="financeiro">Financeiro</option>
-                        <option value="master">Master</option>
-                        <option value="nenhum">Sem Acesso</option>
+                        <option>Master</option>
+                        <option>Atendimento</option>
+                        <option>Médico</option>
                       </Field>
                     </Col>
+                    <Col md={6}>
+                      <Field name="crm" label="CRM" component={FieldInput} />
+                    </Col>
+                    <Col md={6}>
+                      <Field
+                        name="especialidade"
+                        label="Especialidade"
+                        component={FieldInput}
+                      />
+                    </Col>
                   </Row>
-                  <Field
-                    type="textarea"
-                    name="infoextra"
-                    label="Informações Extra"
-                    placeholder="Informações Extra"
-                    component={FieldInput}
-                  />
                 </Col>
               </Row>
 
