@@ -6,7 +6,16 @@ import "moment/locale/pt-br";
 import Dropzone from "react-dropzone";
 import { uniqueId } from "lodash";
 import PostFiles from "./PostFiles";
-import { Row, Col, Input, FormGroup, Button, Card, CardBody } from "reactstrap";
+import {
+  Row,
+  Col,
+  Input,
+  FormGroup,
+  Button,
+  Card,
+  CardBody,
+  Collapse,
+} from "reactstrap";
 
 import FileList from "./FileList";
 
@@ -36,6 +45,37 @@ interface UploadFile {
 
 type UploadFileWithoutProgress = Omit<UploadFile, "progress, file">;
 
+function ItemHistorico({ data }: any) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
+  return (
+    <Card style={{ marginBottom: 20 }}>
+      <Button onClick={toggle} color="info" outline block>
+        <Row form className={"d-flex align-items-center"}>
+          <Perfil className="img-fluid mr-3" src={data.avatar || Foto} />
+          {data.nome}
+          <br />
+          {data.date
+            ? moment(data.date.toDate()).format("DD/MM/YYYY HH:mm")
+            : ""}
+        </Row>
+      </Button>
+      <Collapse isOpen={isOpen}>
+        <CardBody>
+          <Row key={data.key}>
+            <Col md={12}>
+              <hr />
+            </Col>
+            <Col md={8}>{data.text}</Col>
+            <Col md={4}>{data.docs && <PostFiles file={data.docs} />}</Col>
+          </Row>
+        </CardBody>
+      </Collapse>
+    </Card>
+  );
+}
+
 export default function Interacao({ id }: { id: string }) {
   const [posts] = useFirestoreSubCollection<Post>(
     "clientes",
@@ -44,11 +84,10 @@ export default function Interacao({ id }: { id: string }) {
   );
   const [caso, snap] = useFirestoreDoc<Caso>("casos", id);
   const user = auth().currentUser as { uid: string; displayName: string };
-  const [analista] = useFirestoreDoc<Usuarios>("usuarios", user?.uid);
+  const [usuario] = useFirestoreDoc<Usuarios>("usuarios", user?.uid);
   const [text, setText] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState<UploadFile[]>([]);
   const [toUp, setToUp] = useState<any>([]);
-
   useEffect(() => {
     const docs = uploadedFiles.map((item) => ({
       name: item.name,
@@ -93,26 +132,6 @@ export default function Interacao({ id }: { id: string }) {
     });
   }
 
-  // async function upServer(upload: UploadFile) {
-  //   storage()
-  //     .ref(`/docs/${id}/post/${upload.name}`)
-  //     .put(upload.file)
-  //     .on(storage.TaskEvent.STATE_CHANGED, snap => {
-  //       const progress = (snap.bytesTransferred / snap.totalBytes) * 100;
-  //       updateFile(upload.id, { progress })
-  //         .then(() => {
-  //           snap.ref
-  //             .getDownloadURL()
-  //             .then(url => {
-  //               updateFile(upload.id, { uploaded: true, url: url });
-  //             })
-  //             .catch(() => {
-  //               updateFile(upload.id, { error: true });
-  //             });
-  //         });
-  //     });
-  // }
-
   function upServer(upload: UploadFile) {
     new FirebaseStorageUpload(`/docs/${id}/post`, upload.file)
       .start(upload.name)
@@ -120,9 +139,6 @@ export default function Interacao({ id }: { id: string }) {
       .onGetDownloadUrl((url) => {
         updateFile(upload.id, { uploaded: true, url: url });
       });
-    // .onFinish(snap => {
-    //   console.log("chegou no finish");
-    // });
   }
 
   function update(status: number) {
@@ -139,8 +155,8 @@ export default function Interacao({ id }: { id: string }) {
           text: text,
           date: firestore.Timestamp.now(),
           uid: user.uid,
-          nome: user.displayName,
-          // avatar: analista?.avatar,
+          nome: usuario?.nome,
+          avatar: usuario?.avatar,
           docs: toUp,
         });
     } else {
@@ -159,29 +175,7 @@ export default function Interacao({ id }: { id: string }) {
         Interação
       </Title>
       {posts.map((post) => (
-        <Card style={{ marginBottom: 20 }}>
-          <CardBody>
-            <Row key={post.key}>
-              <Col md={12}>
-                <Row form className={"d-flex align-items-center"}>
-                  <Col md={1}>
-                    <Perfil className="img-fluid" src={post.avatar || Foto} />
-                  </Col>
-                  <Col md={11}>
-                    {post.nome}
-                    <br />
-                    {post.date
-                      ? moment(post.date.toDate()).format("DD/MM/YYYY HH:mm")
-                      : ""}
-                  </Col>
-                </Row>
-                <hr />
-              </Col>
-              <Col md={9}>{post.text}</Col>
-              <Col md={3}>{post.docs && <PostFiles file={post.docs} />}</Col>
-            </Row>
-          </CardBody>
-        </Card>
+        <ItemHistorico data={post} />
       ))}
 
       <Card style={{ marginBottom: 20 }}>
