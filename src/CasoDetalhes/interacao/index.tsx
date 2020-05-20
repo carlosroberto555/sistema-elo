@@ -156,7 +156,7 @@ export default function Interacao({ id }: { id: string }) {
           date: firestore.Timestamp.now(),
           uid: user.uid,
           nome: usuario?.nome,
-          avatar: usuario?.avatar,
+          // avatar: usuario && usuario?.avatar,
           docs: toUp,
         });
     } else {
