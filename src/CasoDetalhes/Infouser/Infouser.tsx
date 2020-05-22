@@ -24,11 +24,10 @@ export default function UserInfo({ id }: { id: string }) {
           <FotoPerfil className={"image-fluid"} src={avatar} />
         </Center>
         <Center>
-          <NomeUser>
-            {cliente && cliente.nome}
-            <br />
-            <DisplayName>{cliente && cliente.email}</DisplayName>
-          </NomeUser>
+          <NomeUser>{cliente && cliente.nome}</NomeUser>
+        </Center>
+        <Center>
+          <DisplayName>{cliente && cliente.email}</DisplayName>
         </Center>
       </CardBody>
       <hr />
@@ -36,7 +35,7 @@ export default function UserInfo({ id }: { id: string }) {
         <Center>
           <Link to={`/clientes/${cliente?.key}`}>
             <Button style={{ marginRight: "10px" }} color="info">
-              Perfil do cliente
+              Nova Consulta
             </Button>
           </Link>
         </Center>
