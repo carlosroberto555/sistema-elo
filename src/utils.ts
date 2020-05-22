@@ -23,23 +23,23 @@ type Options<T> = {
 };
 
 export const AuthContext = createContext<AuthContextProps>({
-  isAuthenticated: false,
-  authLoading: true
+  isAuthenticated: true,
+  authLoading: true,
 });
 
 export function useFirestore<T>(
   collection: string,
-  formatDoc: FormatListFunction<T> = doc => doc.data() as T
+  formatDoc: FormatListFunction<T> = (doc) => doc.data() as T
 ) {
   const [items, setItems] = useState<(T & { key: string })[]>([]);
 
   useEffect(() => {
     return firestore()
       .collection(collection)
-      .onSnapshot(snap => {
-        const docs = snap.docs.map(doc => ({
+      .onSnapshot((snap) => {
+        const docs = snap.docs.map((doc) => ({
           ...formatDoc(doc),
-          key: doc.id
+          key: doc.id,
         }));
         setItems(docs);
       });
@@ -53,7 +53,8 @@ export function useFirestoreDoc<T>(
   key: string,
   options?: Pick<Options<T>, "formatDoc" | "initial">
 ): FirestoreItemReturn<T> {
-  const formatDoc = (options && options.formatDoc) || (doc => doc.data() as T);
+  const formatDoc =
+    (options && options.formatDoc) || ((doc) => doc.data() as T);
   const [loading, setLoading] = useState(false);
   const [snap, setSnap] = useState<DocumentSnapshot>();
   const [item, setItem] = useState<FirestoreItem<T>>(options?.initial);
@@ -63,7 +64,7 @@ export function useFirestoreDoc<T>(
       return firestore()
         .collection(collection)
         .doc(key)
-        .onSnapshot(snap => {
+        .onSnapshot((snap) => {
           setLoading(false);
           setSnap(snap);
           setItem({ ...formatDoc(snap), key: snap.id });
@@ -78,7 +79,7 @@ export function useFirestoreSubCollection<T>(
   collection: string,
   key: string,
   subcollection: string,
-  formatDoc: FormatItemFunction<T> = doc => doc.data() as T
+  formatDoc: FormatItemFunction<T> = (doc) => doc.data() as T
 ) {
   const [items, setItems] = useState<(T & { key: string })[]>([]);
 
@@ -87,10 +88,10 @@ export function useFirestoreSubCollection<T>(
       .collection(collection)
       .doc(key)
       .collection(subcollection)
-      .onSnapshot(snap => {
-        const docs = snap.docs.map(doc => ({
+      .onSnapshot((snap) => {
+        const docs = snap.docs.map((doc) => ({
           ...formatDoc(doc),
-          key: doc.id
+          key: doc.id,
         }));
         setItems(docs);
       });
@@ -103,7 +104,7 @@ export function useFirestoreRef<T>(
   ref: DocumentReference | undefined,
   options?: Options<T>
 ) {
-  const format = (options && options.formatDoc) || (doc => doc.data() as T);
+  const format = (options && options.formatDoc) || ((doc) => doc.data() as T);
   const [doc, setDoc] = useState<FirestoreItem<T>>(options?.initial);
 
   useEffect(() => {
