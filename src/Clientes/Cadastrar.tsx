@@ -143,6 +143,7 @@ export default function Usuarios() {
                   <Row form>
                     <Col md={8}>
                       <Field
+                        type="name"
                         name="nome"
                         label="Nome"
                         component={FieldInput}
@@ -150,7 +151,15 @@ export default function Usuarios() {
                       />
                     </Col>
                     <Col md={4}>
-                      <Field name="sexo" label="Sexo" component={FieldInput} />
+                      <Field
+                        type="select"
+                        name="sexo"
+                        label="Sexo"
+                        component={FieldInput}
+                      >
+                        <option>Masculino</option>
+                        <option>Feminino</option>
+                      </Field>
                     </Col>
                     <Col md={5}>
                       <Field
@@ -181,6 +190,7 @@ export default function Usuarios() {
                     </Col>
                     <Col md={6}>
                       <Field
+                        type="number"
                         name="telefone"
                         label="Celular"
                         component={FieldInput}
@@ -189,6 +199,7 @@ export default function Usuarios() {
                     </Col>
                     <Col md={6}>
                       <Field
+                        type="email"
                         name="email"
                         label="Email"
                         component={FieldInput}
