@@ -45,7 +45,7 @@ interface CadastroFormInputs {
   uid: string;
 }
 
-export default function Usuarios() {
+export default function Cadastrar() {
   const [modal, setModal] = useState(false);
   const [nestedModal, setNestedModal] = useState(false);
   const [closeAll, setCloseAll] = useState(false);
@@ -69,11 +69,13 @@ export default function Usuarios() {
     //   await data.user.updateProfile({ displayName: rest.nome });
     //   const uid = data.user.uid;
 
-    await firestore()
+    const data = await firestore()
       .collection("clientes")
       .doc()
       .set(rest);
-
+    if (data as any) {
+      console.log(data);
+    }
     // if (imgPreview) {
     //   await new FirebaseStorageUpload("/profile", imgPreview)
     //     .start(uid + ".jpg")
