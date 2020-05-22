@@ -13,7 +13,8 @@ interface Caso {
 }
 interface Consultas {
   title: string;
-  start: import("firebase").firestore.Timestamp;
+  start: string;
+  end: string;
 }
 interface Clientes {
   avatar: string;
@@ -74,7 +75,6 @@ interface Post {
 type ChatItem = Chat & FirestoreItem;
 type CasoItem = Caso & FirestoreItem;
 type PostItem = Post & FirestoreItem;
-type ConsultasItem = Consultas & FirestoreItem;
 
 type FirestoreItem<T = any> = (T & { key: string }) | undefined;
 type FirestoreItems<T> = FirestoreItem<T>[];
