@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   padding: 10px;
+  height: 100vh;
 `;
 export const Cubo = styled.div`
   width: 90%;
