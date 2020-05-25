@@ -14,6 +14,12 @@ export default function Inicio() {
       start: moment("22-05-2020 08:00:00", "DD-MM-YYYY hh:mm:ss"),
       end: moment("23-05-2020 08:30:00", "DD-MM-YYYY hh:mm:ss"),
     },
+    {
+      id: 2,
+      title: "consulta 02",
+      start: moment("25-05-2020"),
+      allDay: true,
+    },
   ]);
   const localizer = momentLocalizer(moment);
   console.log(consulta);
