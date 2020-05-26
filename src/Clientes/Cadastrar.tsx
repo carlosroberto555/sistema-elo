@@ -20,6 +20,7 @@ import { tempAuth } from "../firebase";
 import { Center, FotoPerfil, AddImg } from "./style";
 import { InputType } from "reactstrap/lib/Input";
 import FirebaseStorageUpload from "../FirebaseStorageUpload";
+import formatString from "format-string-by-pattern";
 
 interface Props extends FieldRenderProps<string> {
   label: string;
@@ -37,6 +38,12 @@ function FieldInput({ label, input, meta, ...rest }: Props) {
   );
 }
 const required = (value?: string) => (value ? undefined : "Campo obrigatório");
+
+const mask = {
+  telefone: "(99) 99999-9999",
+  cpf: "999.999.999-99",
+  cep: "99999-999",
+};
 
 interface CadastroFormInputs {
   login: string;
@@ -60,15 +67,6 @@ export default function Cadastrar() {
   async function cadastrarUsuario(values: CadastroFormInputs) {
     const { senha, ...rest } = values;
 
-    // const data = await tempAuth.createUserWithEmailAndPassword(
-    //   rest.login,
-    //   senha
-    // );
-
-    // if (data && data.user) {
-    //   await data.user.updateProfile({ displayName: rest.nome });
-    //   const uid = data.user.uid;
-
     const data = await firestore()
       .collection("clientes")
       .doc()
@@ -76,29 +74,6 @@ export default function Cadastrar() {
     if (data as any) {
       console.log(data);
     }
-    // if (imgPreview) {
-    //   await new FirebaseStorageUpload("/profile", imgPreview)
-    //     .start(uid + ".jpg")
-    //     .onProgress(console.log);
-
-    // storage()
-    //   .ref("/profile/" + uid + ".jpg")
-    //   .put(imgPreview)
-    //   .on(storage.TaskEvent.STATE_CHANGED, snap => {
-    //     const progress = (snap.bytesTransferred / snap.totalBytes) * 100;
-    //     setImageProgress(+progress.toFixed(0));
-    //     if (snap.state === storage.TaskState.SUCCESS) {
-    //       snap.ref.getDownloadURL().then(url => {
-    //         data.user &&
-    //           data.user.updateProfile({
-    //             displayName: rest.nome,
-    //             photoURL: url
-    //           });
-    //       });
-    //     }
-    //   });
-    // }
-
     toggleAll();
   }
 
@@ -188,15 +163,21 @@ export default function Cadastrar() {
                       <Field name="rg" label="RG" component={FieldInput} />
                     </Col>
                     <Col md={6}>
-                      <Field name="cpf" label="CPF" component={FieldInput} />
+                      <Field
+                        name="cpf"
+                        label="CPF"
+                        component={FieldInput}
+                        parse={formatString(mask.cpf)}
+                      />
                     </Col>
                     <Col md={6}>
                       <Field
-                        type="number"
+                        type="tel"
                         name="telefone"
                         label="Celular"
                         component={FieldInput}
                         validate={required}
+                        parse={formatString(mask.telefone)}
                       />
                     </Col>
                     <Col md={6}>
@@ -243,7 +224,12 @@ export default function Cadastrar() {
                       />
                     </Col>
                     <Col md={4}>
-                      <Field name="cep" label="CEP" component={FieldInput} />
+                      <Field
+                        name="cep"
+                        label="CEP"
+                        component={FieldInput}
+                        parse={formatString(mask.cep)}
+                      />
                     </Col>
                     <Col md={4}>
                       <Field
