@@ -18,7 +18,7 @@ import formatString from "format-string-by-pattern";
 import { firestore } from "firebase/app";
 import { tempAuth } from "../firebase";
 
-import { Center, FotoPerfil, AddImg } from "./style";
+import { Center, MiniFoto, AddImg } from "./style";
 import { InputType } from "reactstrap/lib/Input";
 import FirebaseStorageUpload from "../FirebaseStorageUpload";
 
@@ -115,7 +115,7 @@ export default function Usuarios() {
                 <Row from>
                   <Col>
                     <Label for="input-file">
-                      <FotoPerfil
+                      <MiniFoto
                         src={
                           imgPreview ? URL.createObjectURL(imgPreview) : Foto
                         }

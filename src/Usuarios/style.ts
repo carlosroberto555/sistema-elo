@@ -53,6 +53,6 @@ export const AddImg = styled.input`
 `;
 export const MiniFoto = styled.img`
   border-radius: 50px;
-  width: 40px;
-  height: 40px;
+  width: 100px;
+  height: 100px;
 `;
