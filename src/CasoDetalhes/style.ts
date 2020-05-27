@@ -29,8 +29,8 @@ export const User = styled.div`
 `;
 export const FotoPerfil = styled.img`
   border-radius: 100%;
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
 `;
 export const NomeUser = styled.div`
   color: #000000;
@@ -95,4 +95,7 @@ export const BtnInteraction = styled.div`
   display: flex;
   align-items: center;
   flex-direction: center;
+`;
+export const AddImg = styled.input`
+  display: none;
 `;

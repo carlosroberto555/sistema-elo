@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Form, Field, FieldRenderProps } from "react-final-form";
 import { useFirestoreDoc } from "../../utils";
-import { firestore } from "firebase/app";
+import { firestore, storage } from "firebase/app";
 import formatString from "format-string-by-pattern";
-import { Center } from "../style";
+import { Center, FotoPerfil, AddImg } from "../style";
+import Foto from "../../../src/assets/profile-user.png";
 import {
   Row,
   Col,
@@ -49,6 +50,11 @@ export default function TabDados({ id, onGoBack }: props) {
   const [modalDelete, setModalDelete] = useState(false);
   const [dados] = useFirestoreDoc<Clientes>("clientes", id);
   const toggle = () => setModalDelete(!modalDelete);
+  const [imgPreview, setImgPreview] = useState();
+
+  const avatar = imgPreview
+    ? URL.createObjectURL(imgPreview)
+    : (dados && dados.avatar) || Foto;
 
   async function deletarUsuario() {
     await firestore()
@@ -58,10 +64,23 @@ export default function TabDados({ id, onGoBack }: props) {
     toggle();
     onGoBack();
   }
+  function onChangeImage(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.files) {
+      //@ts-ignore
+      setImgPreview(e.target.files[0]);
+    }
+  }
 
   return (
     <Form
       onSubmit={async (values) => {
+        if (imgPreview) {
+          const snap = await storage()
+            .ref("/profile/" + id + ".jpg")
+            .put(imgPreview as any);
+          values.avatar = await snap.ref.getDownloadURL();
+        }
+
         await firestore()
           .collection("clientes")
           .doc(id)
@@ -73,6 +92,17 @@ export default function TabDados({ id, onGoBack }: props) {
         <>
           <Card style={{ marginBottom: 15 }}>
             <CardBody>
+              <Center>
+                <Label for="input-file">
+                  <FotoPerfil src={avatar} />
+                </Label>
+                <AddImg
+                  id="input-file"
+                  type="file"
+                  onChange={onChangeImage}
+                  disabled={!editar}
+                />
+              </Center>
               <Row form>
                 <Col md="8">
                   <Field
