@@ -90,25 +90,6 @@ export default function ItemPerfil({ id, onGoBack }: Props) {
                     onChange={onChangeImage}
                   />
                 </Col>
-                <Col>
-                  <Field
-                    disabled={!editar}
-                    name="login"
-                    label="Email de Login"
-                    placeholder="Login"
-                    component={FieldInput}
-                  />
-                </Col>
-                <Col>
-                  <Field
-                    disabled={!editar}
-                    type="password"
-                    name="senha"
-                    label="Senha"
-                    placeholder="Senha"
-                    component={FieldInput}
-                  />
-                </Col>
               </Row>
             </Center>
             <hr />

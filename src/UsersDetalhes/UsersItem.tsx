@@ -15,6 +15,7 @@ import Foto from "../../src/assets/profile-user.png";
 import { useFirestoreDoc } from "../utils";
 import { Form, Field, FieldRenderProps } from "react-final-form";
 import formatString from "format-string-by-pattern";
+import { tempAuth } from "../firebase";
 import {
   Container,
   Containerperfil,
@@ -31,6 +32,7 @@ interface FieldProps extends FieldRenderProps<string> {
   label: string;
   delete: void;
 }
+
 function FieldInput({ label, input, meta, ...rest }: FieldProps) {
   return (
     <FormGroup>
@@ -62,18 +64,6 @@ export default function Perfil({ id, onGoBack }: Props) {
     ? URL.createObjectURL(imgPreview)
     : (user && user.avatar) || Foto;
 
-  // useEffect(() => {
-  //   try {
-  //     storage()
-  //       .ref("/profile")
-  //       .child(id + ".jpg")
-  //       .getDownloadURL()
-  //       .then(url => setStorageImage(url));
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // }, []);
-
   function onChangeImage(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files) {
       //@ts-ignore
@@ -87,9 +77,9 @@ export default function Perfil({ id, onGoBack }: Props) {
       .collection("usuarios")
       .doc(id)
       .delete();
+
     onGoBack();
   }
-
   return (
     <Form
       onSubmit={async (values) => {
@@ -99,7 +89,6 @@ export default function Perfil({ id, onGoBack }: Props) {
             .put(imgPreview as any);
           values.avatar = await snap.ref.getDownloadURL();
         }
-
         await firestore()
           .collection("usuarios")
           .doc(id)
@@ -122,25 +111,6 @@ export default function Perfil({ id, onGoBack }: Props) {
                     type="file"
                     onChange={onChangeImage}
                     disabled={!editar}
-                  />
-                </Col>
-                <Col>
-                  <Field
-                    disabled={!editar}
-                    name="login"
-                    label="Email de Login"
-                    placeholder="Login"
-                    component={FieldInput}
-                  />
-                </Col>
-                <Col>
-                  <Field
-                    disabled={!editar}
-                    type="password"
-                    name="senha"
-                    label="Senha"
-                    placeholder="Senha"
-                    component={FieldInput}
                   />
                 </Col>
               </Row>
