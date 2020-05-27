@@ -85,23 +85,6 @@ export default function Usuarios() {
         await new FirebaseStorageUpload("/profile", imgPreview)
           .start(uid + ".jpg")
           .onProgress(console.log);
-
-        // storage()
-        //   .ref("/profile/" + uid + ".jpg")
-        //   .put(imgPreview)
-        //   .on(storage.TaskEvent.STATE_CHANGED, snap => {
-        //     const progress = (snap.bytesTransferred / snap.totalBytes) * 100;
-        //     setImageProgress(+progress.toFixed(0));
-        //     if (snap.state === storage.TaskState.SUCCESS) {
-        //       snap.ref.getDownloadURL().then(url => {
-        //         data.user &&
-        //           data.user.updateProfile({
-        //             displayName: rest.nome,
-        //             photoURL: url
-        //           });
-        //       });
-        //     }
-        //   });
       }
     }
 
@@ -193,6 +176,7 @@ export default function Usuarios() {
                         name="email"
                         label="Email"
                         component={FieldInput}
+                        validate={required}
                       />
                     </Col>
                     <Col md={4}>
