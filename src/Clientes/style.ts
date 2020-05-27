@@ -39,6 +39,6 @@ export const AddImg = styled.input`
 `;
 export const FotoPerfil = styled.img`
   border-radius: 50px;
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
 `;
