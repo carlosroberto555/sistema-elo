@@ -238,24 +238,13 @@ export default function TabDados({ id, onGoBack }: props) {
                   />
                 </Col>
                 <Col md="4">
-                  <Row form>
-                    <Col md="9">
-                      <Field
-                        name="cep"
-                        label="CEP"
-                        component={FieldInput}
-                        disabled={!editar}
-                        parse={formatString(mask.cep)}
-                      />
-                    </Col>
-                    <Col md="3" style={{ display: "flex" }}>
-                      <Button
-                        icon="search"
-                        color="primary"
-                        className="btn-cep"
-                      />
-                    </Col>
-                  </Row>
+                  <Field
+                    name="cep"
+                    label="CEP"
+                    component={FieldInput}
+                    disabled={!editar}
+                    parse={formatString(mask.cep)}
+                  />
                 </Col>
               </Row>
               <Row form>
