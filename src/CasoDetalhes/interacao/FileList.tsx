@@ -19,10 +19,12 @@ interface UploadFile {
 }
 export default function FileList({
   file,
-  onDelete
+  onDelete,
+  onFinish,
 }: {
   file: any;
   onDelete: any;
+  onFinish: any;
 }) {
   return (
     <Container>
@@ -42,12 +44,13 @@ export default function FileList({
               </span>
             </div>
           </FileInfo>
+          {onFinish(!uploaded.uploaded)}
           <div>
             {!uploaded.uploaded && !uploaded.error && (
               <CircularProgressbar
                 styles={{
                   root: { width: 24 },
-                  path: { stroke: "#7159c1" }
+                  path: { stroke: "#7159c1" },
                 }}
                 strokeWidth={10}
                 value={uploaded.progress}

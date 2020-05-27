@@ -78,6 +78,7 @@ export default function Interacao({ id }: { id: string }) {
   const user = auth().currentUser as { uid: string; displayName: string };
   const [usuario] = useFirestoreDoc<Usuarios>("usuarios", user?.uid);
   const [text, setText] = useState("");
+  const [send, setSend] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<UploadFile[]>([]);
   const [toUp, setToUp] = useState<any>([]);
   useEffect(() => {
@@ -91,6 +92,7 @@ export default function Interacao({ id }: { id: string }) {
   }, [uploadedFiles]);
 
   function handleUpload(files: File[]) {
+    setSend(false);
     const uploadFiles: UploadFile[] = files.map((file: File) => ({
       file,
       id: +uniqueId(),
@@ -123,7 +125,6 @@ export default function Interacao({ id }: { id: string }) {
       );
     });
   }
-  console.log(posts.length);
   function upServer(upload: UploadFile) {
     new FirebaseStorageUpload(`/docs/${id}/post`, upload.file)
       .start(upload.name)
@@ -132,11 +133,6 @@ export default function Interacao({ id }: { id: string }) {
         updateFile(upload.id, { uploaded: true, url: url });
       });
   }
-
-  function update(status: number) {
-    snap && snap.ref.update({ status });
-  }
-  const novoPost = posts.length + 1;
   function addText() {
     if (text) {
       firestore()
@@ -148,17 +144,13 @@ export default function Interacao({ id }: { id: string }) {
           date: firestore.Timestamp.now(),
           uid: user.uid,
           nome: usuario?.nome,
-          // avatar: usuario && usuario?.avatar,
+          avatar: usuario && usuario?.avatar,
           docs: toUp,
         });
     } else {
       alert("Você não inseriu nenhum texto");
     }
     setUploadedFiles([]);
-    setText("");
-    if (caso?.status === 6) {
-      update(3);
-    }
   }
   return (
     <>
@@ -167,7 +159,7 @@ export default function Interacao({ id }: { id: string }) {
         Interação
       </Title>
       {posts.sort().map((post) => (
-        <ItemHistorico data={post} />
+        <ItemHistorico key={post.key} data={post} />
       ))}
 
       <Card style={{ marginBottom: 20 }}>
@@ -189,7 +181,11 @@ export default function Interacao({ id }: { id: string }) {
                 </Col>
                 <Col md={3}>
                   {uploadedFiles.length ? (
-                    <FileList file={uploadedFiles} onDelete={handleDelete} />
+                    <FileList
+                      file={uploadedFiles}
+                      onDelete={handleDelete}
+                      onFinish={setSend}
+                    />
                   ) : (
                     "Adicione os Arquivos"
                   )}
@@ -200,6 +196,7 @@ export default function Interacao({ id }: { id: string }) {
                   style={{ marginRight: "5px" }}
                   onClick={addText}
                   type="button"
+                  disabled={send}
                 >
                   Enviar
                 </Button>
