@@ -13,9 +13,7 @@ import {
 import TabDados from "./TabDados/TabDados";
 import Actionbar from "./Actionbar/Actionbar";
 import Infouser from "./Infouser/Infouser";
-import Historia from "./Historia/Historia";
 import Interacao from "./interacao";
-import Resposta from "./Resposta/Resposta";
 
 import { Container } from "./style";
 import { useFirestoreDoc } from "../utils";

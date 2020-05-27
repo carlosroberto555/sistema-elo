@@ -31,7 +31,7 @@ export default function UserInfo({ id }: { id: string }) {
         </Center>
       </CardBody>
       <hr />
-      <CardBody>
+      {/* <CardBody>
         <Center>
           <Link to={`/clientes/${cliente?.key}`}>
             <Button style={{ marginRight: "10px" }} color="info">
@@ -39,7 +39,7 @@ export default function UserInfo({ id }: { id: string }) {
             </Button>
           </Link>
         </Center>
-      </CardBody>
+      </CardBody> */}
     </Card>
   );
 }

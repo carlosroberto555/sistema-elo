@@ -14,6 +14,7 @@ import {
   Col,
 } from "reactstrap";
 import { Form, Field, FieldRenderProps } from "react-final-form";
+import formatString from "format-string-by-pattern";
 import { firestore } from "firebase/app";
 import { tempAuth } from "../firebase";
 
@@ -37,6 +38,11 @@ function FieldInput({ label, input, meta, ...rest }: Props) {
   );
 }
 const required = (value?: string) => (value ? undefined : "Campo obrigatório");
+const mask = {
+  telefone: "(99) 99999-9999",
+  cpf: "999.999.999-99",
+  cep: "99999-999",
+};
 
 interface CadastroFormInputs {
   login: string;
@@ -179,6 +185,7 @@ export default function Usuarios() {
                         label="Telefone"
                         component={FieldInput}
                         validate={required}
+                        parse={formatString(mask.telefone)}
                       />
                     </Col>
                     <Col md={8}>
@@ -200,7 +207,12 @@ export default function Usuarios() {
                       </Field>
                     </Col>
                     <Col md={8}>
-                      <Field name="cpf" label="CPF" component={FieldInput} />
+                      <Field
+                        name="cpf"
+                        label="CPF"
+                        component={FieldInput}
+                        parse={formatString(mask.cpf)}
+                      />
                     </Col>
                     <Col md={4}>
                       <Field

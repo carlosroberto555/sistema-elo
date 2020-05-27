@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Form, Field, FieldRenderProps } from "react-final-form";
 import { useFirestoreDoc } from "../../utils";
 import { firestore } from "firebase/app";
+import formatString from "format-string-by-pattern";
 import { Center } from "../style";
 import {
   Row,
@@ -34,6 +35,11 @@ function FieldInput({ label, input, meta, ...rest }: Props) {
   );
 }
 const required = (value?: string) => (value ? undefined : "Campo obrigatório");
+const mask = {
+  telefone: "(99) 99999-9999",
+  cpf: "999.999.999-99",
+  cep: "99999-999",
+};
 interface props {
   id: string;
   onGoBack: () => void;
@@ -106,6 +112,7 @@ export default function TabDados({ id, onGoBack }: props) {
                     label="CPF"
                     component={FieldInput}
                     disabled={!editar}
+                    parse={formatString(mask.cpf)}
                   />
                 </Col>
                 <Col md="4">
@@ -142,11 +149,13 @@ export default function TabDados({ id, onGoBack }: props) {
               <Row form>
                 <Col md="5">
                   <Field
+                    type="tel"
                     name="telefone"
                     label="Telefone"
                     component={FieldInput}
                     disabled={!editar}
                     validate={required}
+                    parse={formatString(mask.telefone)}
                   />
                 </Col>
                 <Col md="7">
@@ -206,6 +215,7 @@ export default function TabDados({ id, onGoBack }: props) {
                         label="CEP"
                         component={FieldInput}
                         disabled={!editar}
+                        parse={formatString(mask.cep)}
                       />
                     </Col>
                     <Col md="3" style={{ display: "flex" }}>

@@ -20,15 +20,7 @@ import {
 import FileList from "./FileList";
 
 import Foto from "../../assets/profile-user.png";
-import {
-  Container,
-  Title,
-  Containerperfil,
-  Campocolor,
-  Perfil,
-  Arquivos,
-  BtnInteraction,
-} from "../style";
+import { Title, Perfil, Arquivos, BtnInteraction } from "../style";
 import { useFirestoreSubCollection, useFirestoreDoc } from "../../utils";
 import FirebaseStorageUpload from "../../FirebaseStorageUpload";
 
@@ -131,7 +123,7 @@ export default function Interacao({ id }: { id: string }) {
       );
     });
   }
-
+  console.log(posts.length);
   function upServer(upload: UploadFile) {
     new FirebaseStorageUpload(`/docs/${id}/post`, upload.file)
       .start(upload.name)
@@ -144,7 +136,7 @@ export default function Interacao({ id }: { id: string }) {
   function update(status: number) {
     snap && snap.ref.update({ status });
   }
-
+  const novoPost = posts.length + 1;
   function addText() {
     if (text) {
       firestore()
@@ -174,7 +166,7 @@ export default function Interacao({ id }: { id: string }) {
         <SwapHorizIcon />
         Interação
       </Title>
-      {posts.map((post) => (
+      {posts.sort().map((post) => (
         <ItemHistorico data={post} />
       ))}
 

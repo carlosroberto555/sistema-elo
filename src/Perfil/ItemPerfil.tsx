@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Row, Col, Input, Label, FormGroup, Button } from "reactstrap";
 import Foto from "../../src/assets/profile-user.png";
 import { useFirestoreDoc } from "../utils";
+import formatString from "format-string-by-pattern";
 import { Form, Field, FieldRenderProps } from "react-final-form";
 import {
   Container,
@@ -28,6 +29,12 @@ function FieldInput({ label, input, meta, ...rest }: FieldProps) {
   );
 }
 const required = (value?: string) => (value ? undefined : "Campo obrigatório");
+
+const mask = {
+  telefone: "(99) 99999-9999",
+  cpf: "999.999.999-99",
+  cep: "99999-999",
+};
 
 interface Props {
   id: string;
@@ -124,6 +131,7 @@ export default function ItemPerfil({ id, onGoBack }: Props) {
                       label="Telefone"
                       component={FieldInput}
                       validate={required}
+                      parse={formatString(mask.telefone)}
                     />
                   </Col>
                   <Col md={8}>
@@ -152,6 +160,7 @@ export default function ItemPerfil({ id, onGoBack }: Props) {
                       name="cpf"
                       label="CPF"
                       component={FieldInput}
+                      parse={formatString(mask.cpf)}
                     />
                   </Col>
                   <Col md={4}>

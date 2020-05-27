@@ -14,14 +14,14 @@ import {
   Col,
 } from "reactstrap";
 import { Form, Field, FieldRenderProps } from "react-final-form";
-import { firestore } from "firebase/app";
+import { firestore, storage } from "firebase/app";
 import { tempAuth } from "../firebase";
+import { MD5 } from "object-hash";
 
 import { Center, FotoPerfil, AddImg } from "./style";
 import { InputType } from "reactstrap/lib/Input";
 import FirebaseStorageUpload from "../FirebaseStorageUpload";
 import formatString from "format-string-by-pattern";
-
 interface Props extends FieldRenderProps<string> {
   label: string;
 }
@@ -45,13 +45,6 @@ const mask = {
   cep: "99999-999",
 };
 
-interface CadastroFormInputs {
-  login: string;
-  senha: string;
-  nome: string;
-  uid: string;
-}
-
 export default function Cadastrar() {
   const [modal, setModal] = useState(false);
   const [nestedModal, setNestedModal] = useState(false);
@@ -64,16 +57,21 @@ export default function Cadastrar() {
     }
   }
 
-  async function cadastrarUsuario(values: CadastroFormInputs) {
-    const { senha, ...rest } = values;
+  async function cadastrarUsuario(values: Clientes) {
+    const hash = MD5(values);
 
-    const data = await firestore()
-      .collection("clientes")
-      .doc()
-      .set(rest);
-    if (data as any) {
-      console.log(data);
+    if (imgPreview) {
+      const snap = await storage()
+        .ref("/profile/" + hash + ".jpg")
+        .put(imgPreview as any);
+      values.avatar = await snap.ref.getDownloadURL();
     }
+
+    await firestore()
+      .collection("clientes")
+      .doc(hash)
+      .set(values);
+
     toggleAll();
   }
 
