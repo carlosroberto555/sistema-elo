@@ -12,7 +12,7 @@ import {
   AddImg,
 } from "./style";
 import { InputType } from "reactstrap/lib/Input";
-import { firestore, auth } from "firebase/app";
+import { firestore, auth, storage } from "firebase/app";
 
 type Snapshot = firestore.DocumentSnapshot;
 
@@ -63,6 +63,12 @@ export default function ItemPerfil({ id, onGoBack }: Props) {
   return (
     <Form
       onSubmit={async (values) => {
+        if (imgPreview) {
+          const snap = await storage()
+            .ref("/profile/" + id + ".jpg")
+            .put(imgPreview as any);
+          values.avatar = await snap.ref.getDownloadURL();
+        }
         await firestore()
           .collection("usuarios")
           .doc(currentUser ? currentUser.uid : "")
