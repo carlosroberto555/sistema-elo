@@ -25,7 +25,7 @@ export default function Login(props: RouteChildrenProps<any>) {
     if (!authLoading && isAuthenticated) {
       history.replace(from);
     }
-  }, [authLoading, isAuthenticated]);
+  }, [authLoading, isAuthenticated, from, history]);
 
   async function login() {
     try {
