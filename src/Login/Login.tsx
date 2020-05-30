@@ -13,8 +13,8 @@ export default function Login(props: RouteChildrenProps<any>) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
-  const from = isAuthenticated
-    ? location.state || {
+  const { from } = isAuthenticated
+    ? {
         from: { pathname: "/" },
       }
     : {
@@ -25,7 +25,7 @@ export default function Login(props: RouteChildrenProps<any>) {
     if (!authLoading && isAuthenticated) {
       history.replace(from);
     }
-  }, [authLoading, isAuthenticated, from, history]);
+  }, [authLoading, isAuthenticated]);
 
   async function login() {
     try {

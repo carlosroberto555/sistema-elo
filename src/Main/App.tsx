@@ -37,6 +37,7 @@ export default function App() {
 
   function PrivateRoute({ children, ...rest }: RouteProps) {
     const { isAuthenticated, authLoading } = useContext(AuthContext);
+
     return (
       <Route
         {...rest}
@@ -60,8 +61,8 @@ export default function App() {
     <AuthContext.Provider value={{ isAuthenticated, authLoading, user }}>
       <BrowserRouter>
         <Switch>
-          <Route path="/login" component={Login} />
-          <PrivateRoute path="*">
+          <Route exact path="/login" component={Login} />
+          <PrivateRoute exact path="*">
             <Row style={{ margin: 0 }}>
               <Col style={{ paddingRight: 0, paddingLeft: 0 }} sm="2">
                 <Menu />
