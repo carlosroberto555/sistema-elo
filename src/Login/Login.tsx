@@ -5,10 +5,10 @@ import { auth } from "firebase/app";
 
 import logo from "../assets/logo/logo.svg";
 import { AuthContext } from "../utils";
-import { Container, Logar, Logo, Center, Main } from "./style";
+import { Container, Logo, Center, Main } from "./style";
 
 export default function Login(props: RouteChildrenProps<any>) {
-  const { history, location } = props;
+  const { history } = props;
   const { isAuthenticated, authLoading } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");

@@ -80,7 +80,7 @@ export default function Interacao({ id }: { id: string }) {
   const [send, setSend] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<UploadFile[]>([]);
   const [toUp, setToUp] = useState<any>([]);
-  console.log(posts);
+
   useEffect(() => {
     const docs = uploadedFiles.map((item) => ({
       name: item.name,

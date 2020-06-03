@@ -15,12 +15,10 @@ import {
 } from "reactstrap";
 import { Form, Field, FieldRenderProps } from "react-final-form";
 import { firestore, storage } from "firebase/app";
-import { tempAuth } from "../firebase";
 import { MD5 } from "object-hash";
 
 import { Center, FotoPerfil, AddImg } from "./style";
 import { InputType } from "reactstrap/lib/Input";
-import FirebaseStorageUpload from "../FirebaseStorageUpload";
 import formatString from "format-string-by-pattern";
 interface Props extends FieldRenderProps<string> {
   label: string;
@@ -53,6 +51,7 @@ export default function Cadastrar() {
 
   function onChangeImage(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files) {
+      // @ts-ignore
       setImgPreview(e.target.files[0]);
     }
   }

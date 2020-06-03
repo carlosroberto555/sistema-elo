@@ -1,16 +1,8 @@
-import React, { useState } from "react";
-import {
-  Row,
-  Col,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
+import React from "react";
+import { Row, Col } from "reactstrap";
 import Cadastrar from "./Cadastrar";
 
-import { Container, Search } from "./style";
-import { getStatus } from "../components/BadgeStatus";
+import { Container } from "./style";
 
 type Props = {
   filter: number;
@@ -18,8 +10,6 @@ type Props = {
 };
 
 export default function Inicio({ filter, onChangeFilter }: Props) {
-  const [dropdown, setDropdown] = useState(false);
-
   return (
     <Container>
       <Row>

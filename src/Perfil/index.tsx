@@ -9,7 +9,6 @@ type Params = {
 export default function Perfil(props: RouteComponentProps<Params>) {
   const { history } = props;
   const params = props.match.params;
-  console.log(params);
   return (
     <div>
       <UsersItem onGoBack={() => history.goBack()} id={params.id} />

@@ -1,6 +1,5 @@
 import React from "react";
-import { Row, Col, Table, Button } from "reactstrap";
-import BadgeStatus from "../components/BadgeStatus";
+import { Table, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import Foto from "../assets/profile-user.png";
 
@@ -13,12 +12,6 @@ type Props = {
 
 export default function Clientes({ filter }: Props) {
   const [clientes] = useFirestore<Clientes>("clientes");
-  console.log(clientes);
-  function filtro(caso: Caso) {
-    if (filter === 0 || caso.status === filter) {
-      return true;
-    }
-  }
 
   return (
     <Table hover>

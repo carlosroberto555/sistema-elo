@@ -1,18 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import Cadastrar from "./Cadastrar";
-import {
-  Row,
-  Col,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
+import { Row, Col } from "reactstrap";
 
-import { Container, Search } from "./style";
+import { Container } from "./style";
 
 export default function Inicio() {
-  const [dropdown, setDropdown] = useState(false);
   return (
     <Container>
       <Row>

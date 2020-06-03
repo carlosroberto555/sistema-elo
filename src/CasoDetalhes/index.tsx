@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import {
   Row,
@@ -11,12 +11,8 @@ import {
 } from "reactstrap";
 
 import TabDados from "./TabDados/TabDados";
-import Actionbar from "./Actionbar/Actionbar";
 import Infouser from "./Infouser/Infouser";
 import Interacao from "./interacao";
-
-import { Container } from "./style";
-import { useFirestoreDoc } from "../utils";
 
 type Params = {
   id: string;
@@ -24,26 +20,12 @@ type Params = {
 
 export default function CasoDetalhes(props: RouteComponentProps<Params>) {
   const params = props.match.params;
-  const [caso] = useFirestoreDoc<Caso>("casos", params.id);
-  const [verificado, setVerificado] = useState(false);
-  const [finalizar, setFinalizar] = useState(true);
-  const userResp = caso?.resp || "";
-  const [user] = useFirestoreDoc<Usuarios>("usuarios", userResp);
   const [activeTab, setActiveTab] = useState("1");
   const { history } = props;
 
   const toggleTab = (tab: string) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
-
-  useEffect(() => {
-    if (caso?.status === 1) {
-      setVerificado(!verificado);
-    }
-    if (caso?.status === 3) {
-      setFinalizar(false);
-    }
-  }, [caso?.status]);
 
   return (
     <Row>

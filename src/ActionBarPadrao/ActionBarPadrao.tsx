@@ -1,21 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 // import SearchIcon from "@material-ui/icons/Search";
-import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import { useFirestoreDoc } from "../utils";
 import Foto from "../../src/assets/profile-user.png";
-import {
-  Row,
-  Col,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
+import { Row, Col } from "reactstrap";
 import { Container, Photo, NomeUser, Matricula, RouterLink } from "./style";
 import { auth } from "firebase/app";
 
 export default function ActionBarPadrao() {
-  const [notify, setNotify] = useState(false);
   const uid = auth().currentUser?.uid;
   const [user] = useFirestoreDoc<Usuarios>("usuarios", uid as string);
   const avatar = (user && user.avatar) || Foto;

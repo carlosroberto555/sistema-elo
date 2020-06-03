@@ -15,7 +15,6 @@ import Foto from "../../src/assets/profile-user.png";
 import { useFirestoreDoc } from "../utils";
 import { Form, Field, FieldRenderProps } from "react-final-form";
 import formatString from "format-string-by-pattern";
-import { tempAuth } from "../firebase";
 import {
   Container,
   Containerperfil,
