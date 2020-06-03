@@ -65,6 +65,7 @@ interface Post {
   avatar: string;
   date: import("firebase").firestore.Timestamp;
   docs: Array;
+  postId: number;
 }
 
 type ChatItem = Chat & FirestoreItem;

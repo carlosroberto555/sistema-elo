@@ -88,6 +88,7 @@ export function useFirestoreSubCollection<T>(
       .collection(collection)
       .doc(key)
       .collection(subcollection)
+      .orderBy("postId")
       .onSnapshot((snap) => {
         const docs = snap.docs.map((doc) => ({
           ...formatDoc(doc),

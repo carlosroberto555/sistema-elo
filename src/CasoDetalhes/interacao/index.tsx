@@ -74,13 +74,13 @@ export default function Interacao({ id }: { id: string }) {
     id,
     "interactions"
   );
-  const [caso, snap] = useFirestoreDoc<Caso>("casos", id);
   const user = auth().currentUser as { uid: string; displayName: string };
   const [usuario] = useFirestoreDoc<Usuarios>("usuarios", user?.uid);
   const [text, setText] = useState("");
   const [send, setSend] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<UploadFile[]>([]);
   const [toUp, setToUp] = useState<any>([]);
+  console.log(posts);
   useEffect(() => {
     const docs = uploadedFiles.map((item) => ({
       name: item.name,
@@ -140,17 +140,19 @@ export default function Interacao({ id }: { id: string }) {
         .doc(id)
         .collection("interactions")
         .add({
+          postId: posts.length + 1,
           text: text,
           date: firestore.Timestamp.now(),
           uid: user.uid,
-          nome: usuario?.nome,
-          avatar: usuario && usuario?.avatar,
+          nome: usuario && usuario.nome,
+          avatar: (usuario && usuario.avatar) || "",
           docs: toUp,
         });
     } else {
       alert("Você não inseriu nenhum texto");
     }
     setUploadedFiles([]);
+    setText("");
   }
   return (
     <>
@@ -158,7 +160,7 @@ export default function Interacao({ id }: { id: string }) {
         <SwapHorizIcon />
         Interação
       </Title>
-      {posts.sort().map((post) => (
+      {posts.map((post) => (
         <ItemHistorico key={post.key} data={post} />
       ))}
 
