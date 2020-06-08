@@ -15,7 +15,7 @@ import {
 } from "reactstrap";
 import { Form, Field, FieldRenderProps } from "react-final-form";
 import formatString from "format-string-by-pattern";
-import { firestore } from "firebase/app";
+import { firestore, storage } from "firebase/app";
 import { tempAuth } from "../firebase";
 
 import { Center, MiniFoto, AddImg } from "./style";
@@ -49,6 +49,7 @@ interface CadastroFormInputs {
   senha: string;
   nome: string;
   uid: string;
+  avatar: string;
 }
 
 export default function Usuarios() {
@@ -76,16 +77,16 @@ export default function Usuarios() {
       await data.user.updateProfile({ displayName: rest.nome });
       const uid = data.user.uid;
 
+      if (imgPreview) {
+        const snap = await storage()
+          .ref("/profile/" + uid + ".jpg")
+          .put(imgPreview as any);
+        rest.avatar = await snap.ref.getDownloadURL();
+      }
       await firestore()
         .collection("usuarios")
         .doc(uid)
         .set(rest);
-
-      if (imgPreview) {
-        await new FirebaseStorageUpload("/profile", imgPreview)
-          .start(uid + ".jpg")
-          .onProgress(console.log);
-      }
     }
 
     toggleAll();
