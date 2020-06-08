@@ -4,12 +4,14 @@ import Foto from "../../src/assets/profile-user.png";
 import { useFirestoreDoc } from "../utils";
 import formatString from "format-string-by-pattern";
 import { Form, Field, FieldRenderProps } from "react-final-form";
+import ModalSenha from "./ModalSenha";
 import {
   Container,
   Containerperfil,
   FotoPerfil,
   Center,
   AddImg,
+  OptionEdit,
 } from "./style";
 import { InputType } from "reactstrap/lib/Input";
 import { firestore, auth, storage } from "firebase/app";
@@ -184,8 +186,8 @@ export default function ItemPerfil({ id, onGoBack }: Props) {
             </Row>
             <hr />
             {editar ? (
-              <Row>
-                <Col>
+              <OptionEdit>
+                <div>
                   <Button
                     style={{ marginRight: 10 }}
                     color="success"
@@ -195,8 +197,9 @@ export default function ItemPerfil({ id, onGoBack }: Props) {
                     Salvar
                   </Button>
                   <Button onClick={() => setEditar(false)}>Cancelar</Button>
-                </Col>
-              </Row>
+                </div>
+                <ModalSenha />
+              </OptionEdit>
             ) : (
               <Button color="primary" onClick={() => setEditar(true)}>
                 Editar

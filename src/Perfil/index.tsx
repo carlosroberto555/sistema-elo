@@ -2,7 +2,6 @@ import React from "react";
 import UsersItem from "./ItemPerfil";
 import { RouteComponentProps } from "react-router-dom";
 
-// import { Container } from './styles';
 type Params = {
   id: string;
 };

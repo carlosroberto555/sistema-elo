@@ -47,3 +47,7 @@ export const SubTitle = styled.p`
 export const AddImg = styled.input`
   display: none;
 `;
+export const OptionEdit = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
