@@ -30,6 +30,11 @@ export const Center = styled.div`
   justify-content: center;
   align-items: center;
 `;
+export const ErrorCode = styled.p`
+  font-size: 15px;
+  color: #c97188;
+  font-style: italic;
+`;
 export const Logo = styled.img`
   width: 8em;
 `;

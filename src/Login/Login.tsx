@@ -5,13 +5,14 @@ import { auth } from "firebase/app";
 
 import logo from "../assets/logo/logo.svg";
 import { AuthContext } from "../utils";
-import { Container, Logo, Center, Main } from "./style";
+import { Container, Logo, Center, Main, ErrorCode } from "./style";
 
 export default function Login(props: RouteChildrenProps<any>) {
   const { history } = props;
   const { isAuthenticated, authLoading } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [errorLogin, setErrorLogin] = useState("");
 
   const { from } = isAuthenticated
     ? {
@@ -28,11 +29,11 @@ export default function Login(props: RouteChildrenProps<any>) {
   }, [authLoading, isAuthenticated, from, history]);
 
   async function login() {
-    try {
-      await auth().signInWithEmailAndPassword(email, senha);
-    } catch (e) {
-      console.log(e);
-    }
+    await auth()
+      .signInWithEmailAndPassword(email, senha)
+      .catch(function(error) {
+        setErrorLogin(error);
+      });
   }
 
   return (
@@ -68,6 +69,11 @@ export default function Login(props: RouteChildrenProps<any>) {
         <Center>
           <Button onClick={login}>Entrar</Button>
         </Center>
+        {errorLogin && (
+          <Center>
+            <ErrorCode>Usuário ou senha inválido</ErrorCode>
+          </Center>
+        )}
       </Main>
     </Container>
   );
