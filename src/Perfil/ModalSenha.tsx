@@ -18,7 +18,11 @@ export default function ModalSenha() {
   const [confirm, setConfirm] = useState(true);
   const [modal, setModal] = useState(false);
 
-  const toggle = () => setModal(!modal);
+  function toggle() {
+    setModal(!modal);
+    setNewPassword("");
+    setPassword01("");
+  }
 
   useEffect(() => {
     if (newPassword !== "" && newPassword === password01) {
@@ -51,7 +55,7 @@ export default function ModalSenha() {
         <ModalHeader toggle={toggle}>Definir nova senha</ModalHeader>
         <ModalBody>
           <FormGroup>
-            <Label for="exampleEmail">Senha Atual</Label>
+            <Label for="exampleEmail">Nova senha</Label>
             <Input
               type="password"
               name="senhaAtual"
@@ -60,7 +64,7 @@ export default function ModalSenha() {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="exampleEmail">Nova Senha</Label>
+            <Label for="exampleEmail">Confirme sua nova Senha</Label>
             <Input
               type="password"
               name="novaSenha"
