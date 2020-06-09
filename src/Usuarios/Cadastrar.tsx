@@ -187,8 +187,8 @@ export default function Usuarios() {
                         label="Status"
                         component={FieldInput}
                       >
-                        <option>Ativo</option>
-                        <option>Bloqueado</option>
+                        <option value="ativo">Ativo</option>
+                        <option value="bloqueado">Bloqueado</option>
                       </Field>
                     </Col>
                     <Col md={8}>

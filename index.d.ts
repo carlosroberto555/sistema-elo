@@ -52,6 +52,7 @@ interface Usuarios {
   nascimento: Date;
   acesso: string;
   uid: string;
+  status: string;
 }
 
 interface Chat {

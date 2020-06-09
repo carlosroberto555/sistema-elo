@@ -55,7 +55,6 @@ interface Props {
 export default function Perfil({ id, onGoBack }: Props) {
   const [editar, setEditar] = useState(false);
   const [user] = useFirestoreDoc<Usuarios>("usuarios", id);
-  const [modal, setModal] = useState(false);
   const [imgPreview, setImgPreview] = useState();
   // const [storageImage, setStorageImage] = useState();
 
@@ -70,15 +69,6 @@ export default function Perfil({ id, onGoBack }: Props) {
     }
   }
 
-  const toggle = () => setModal(!modal);
-  async function apagar() {
-    await firestore()
-      .collection("usuarios")
-      .doc(id)
-      .delete();
-
-    onGoBack();
-  }
   return (
     <Form
       onSubmit={async (values) => {
@@ -212,16 +202,6 @@ export default function Perfil({ id, onGoBack }: Props) {
                   </Button>
                   <Button onClick={() => setEditar(false)}>Cancelar</Button>
                 </Col>
-                <Col>
-                  <Button
-                    type="button"
-                    onClick={toggle}
-                    color="danger"
-                    style={{ position: "absolute", right: 15 }}
-                  >
-                    Excluir
-                  </Button>
-                </Col>
               </Row>
             ) : (
               <Button color="primary" onClick={() => setEditar(true)}>
@@ -229,22 +209,6 @@ export default function Perfil({ id, onGoBack }: Props) {
               </Button>
             )}
           </Containerperfil>
-          <Modal isOpen={modal} toggle={toggle}>
-            <ModalHeader toggle={toggle}>
-              Deletar usuário {user && user.nome}
-            </ModalHeader>
-            <ModalBody>
-              Tem certeza que deseja DELETAR o usuário {user && user.nome}?
-            </ModalBody>
-            <ModalFooter>
-              <Button color="danger" onClick={toggle}>
-                Cancelar
-              </Button>{" "}
-              <Button color="success" onClick={apagar}>
-                Confirmar
-              </Button>
-            </ModalFooter>
-          </Modal>
         </Container>
       )}
     />

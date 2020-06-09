@@ -17,7 +17,7 @@ export default function UserItem() {
             <th>Nome</th>
             <th>Email</th>
             <th>telefone</th>
-            <th>Acesso</th>
+            <th>Status</th>
             <th className="text-right">Ações</th>
           </tr>
         </thead>
@@ -30,7 +30,7 @@ export default function UserItem() {
               </th>
               <th style={{ verticalAlign: "middle" }}>{user.email}</th>
               <th style={{ verticalAlign: "middle" }}>{user.telefone}</th>
-              <th style={{ verticalAlign: "middle" }}>{user.acesso}</th>
+              <th style={{ verticalAlign: "middle" }}>{user.status}</th>
               <th style={{ verticalAlign: "middle" }} className="text-right">
                 <Link to={`/usuarios/${user.key}`}>
                   <Button color="info">Detalhes</Button>
