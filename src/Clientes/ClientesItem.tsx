@@ -13,6 +13,11 @@ type Props = {
 export default function Clientes({ filter }: Props) {
   const [clientes] = useFirestore<Clientes>("clientes");
 
+  function bloqueado(cliente: Clientes) {
+    if (cliente.status !== 0) {
+      return true;
+    }
+  }
   return (
     <Table hover>
       <thead>
@@ -24,7 +29,7 @@ export default function Clientes({ filter }: Props) {
         </tr>
       </thead>
       <tbody>
-        {clientes.map((cliente) => (
+        {clientes.filter(bloqueado).map((cliente) => (
           <tr key={cliente.key}>
             <th style={{ verticalAlign: "middle" }}>
               <FotoPerfil src={cliente.avatar || Foto} className="mr-2" />{" "}
@@ -32,6 +37,7 @@ export default function Clientes({ filter }: Props) {
             </th>
             <th style={{ verticalAlign: "middle" }}>{cliente.email}</th>
             <th style={{ verticalAlign: "middle" }}>{cliente.telefone}</th>
+
             <th style={{ verticalAlign: "middle" }} className="text-right">
               <Link to={`/clientes/${cliente.key}`}>
                 <Button color="info">Detalhes</Button>

@@ -27,6 +27,7 @@ interface Clientes {
   estado: string;
   cep: string;
   uid: string;
+  status: number;
 }
 
 interface Usuarios {

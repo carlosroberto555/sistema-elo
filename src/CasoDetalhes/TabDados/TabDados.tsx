@@ -60,7 +60,9 @@ export default function TabDados({ id, onGoBack }: props) {
     await firestore()
       .collection("clientes")
       .doc(id)
-      .delete();
+      .update({
+        status: 0,
+      });
     toggle();
     onGoBack();
   }
