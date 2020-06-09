@@ -12,11 +12,11 @@ const Menu = () => {
       <Logoimg src={Logo} />
       <Title>Clinica Elo</Title>
       <Nav vertical>
-        <NavItem>
+        {/* <NavItem>
           <NavLink style={{ color: "#fff" }} to="/inicio" tag={Link}>
             Inicio
           </NavLink>
-        </NavItem>
+        </NavItem> */}
         <NavItem>
           <NavLink style={{ color: "#fff" }} to="/clientes" tag={Link}>
             Clientes

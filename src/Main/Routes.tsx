@@ -12,7 +12,7 @@ import UsersDetalhes from "../UsersDetalhes";
 
 export default () => (
   <Switch>
-    <Redirect exact from="/" to="/inicio" />
+    <Redirect exact from="/" to="/clientes" />
     <Route path="/inicio" component={Inicio} />
     <Route exact path="/clientes" component={Clientes} />
     <Route path="/clientes/:id" component={CasoDetalhes} />
