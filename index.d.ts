@@ -13,8 +13,8 @@ interface Caso {
 }
 interface Consultas {
   title: string;
-  start: string;
-  end: string;
+  start: Date;
+  end: Date;
 }
 interface Clientes {
   avatar: string;
