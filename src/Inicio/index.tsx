@@ -23,7 +23,6 @@ const formatDoc: FormatListFunction<Consulta> = (snap) => {
 export default function Inicio() {
   const [agenda] = useFirestore<Consulta>("agenda", formatDoc);
   const localizer = momentLocalizer(moment);
-  console.log(agenda);
 
   // const events = useMemo<Consultas>(() => {
   //   return agenda.map((consulta) => {
