@@ -11,11 +11,14 @@ interface Caso {
   uid: string;
   docs: Array;
 }
-interface Consultas {
+interface Consulta {
   title: string;
   start: Date;
   end: Date;
 }
+
+type Consultas = Array<Consulta>;
+
 interface Clientes {
   avatar: string;
   display_name: string;
@@ -87,3 +90,4 @@ type QuerySnapshot = import("firebase").firestore.QuerySnapshot;
 type DocumentSnapshot = import("firebase").firestore.DocumentSnapshot;
 type DocumentReference = import("firebase").firestore.DocumentReference;
 type CollectionReference = import("firebase").firestore.CollectionReference;
+type QueryDocumentSnapshot = import("firebase").firestore.QueryDocumentSnapshot;

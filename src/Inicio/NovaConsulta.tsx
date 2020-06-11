@@ -60,19 +60,19 @@ export default function NovaConsulta({ dados }: any) {
                   name="title"
                   label="Titulo"
                   component={FieldInput}
-                  validade={required}
+                  validate={required}
                 />
                 <Field
                   name="start"
                   label="Inicio da colsulta"
                   component={FieldInput}
-                  validade={required}
+                  validate={required}
                 />
                 <Field
                   name="end"
                   label="Fim da consulta"
                   component={FieldInput}
-                  validade={required}
+                  validate={required}
                 />
                 <ModalFooter>
                   <Button color="danger" onClick={toggle}>
